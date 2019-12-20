@@ -1,3 +1,4 @@
+import argparse
 import copy
 import logging
 import os
@@ -20,6 +21,11 @@ logger.setLevel(logging.DEBUG)
 logger.addHandler(logging.StreamHandler(sys.stdout))
 
 logger.info("==> Load config")
+
+parser = argparse.ArgumentParser("parser")
+parser.add_argument("--train_file", type=str, required=True)
+args = parser.parse_args()
+
 with open(os.path.join('config', 'config.yml'), 'r') as f:
     config = yaml.load(f, Loader=yaml.FullLoader)
 
@@ -41,7 +47,7 @@ POS_TAG = torchtext.data.Field(init_token="<bos>", eos_token="<eos>", batch_firs
 
 logger.info("==> Load Dataset")
 train, valid = Sejong.splits(fields=(WORD, LEX, POS_TAG),
-                                    train=config['train_file'],
+                                    train=args.train_file,
                                     validation=config['validation_file'],
                                     test=None,
                                     max_token=config['preprocessing']['max_token'])

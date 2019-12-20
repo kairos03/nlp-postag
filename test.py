@@ -40,8 +40,8 @@ def syllable_to_eojeol(syllable_seq):
 
 def parse_option():
     option = argparse.ArgumentParser(description='Korean morphological analyzer')
-    option.add_argument('input_file', type=str)
-    option.add_argument('output_file', type=str)
+    option.add_argument('--input_file', type=str, required=True)
+    option.add_argument('--output_file', type=str, required=True)
     return option.parse_args()
 
 
