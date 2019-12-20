@@ -31,8 +31,8 @@ optimizer:
   lr: 0.001
 
 learning:
-  epochs: 100
+  epochs: 10
   batch_size: 128
   max_grad_norm: 5
 
-gpu: False
+gpu: True
