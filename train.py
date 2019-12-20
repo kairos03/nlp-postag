@@ -9,6 +9,7 @@ import torch.nn as nn
 import torch.optim as optim
 import torchtext
 import yaml
+from tqdm import tqdm
 from torch.optim.lr_scheduler import ReduceLROnPlateau
 
 from dataset import Sejong
@@ -107,7 +108,7 @@ for epoch in range(config['learning']['epochs']):
     model.train()
     train_loss = 0
 
-    for data in train_iter:
+    for data in tqdm(train_iter):
         decoder_outputs, tagger_loss, others = model(data.word[0].to(device), data.lex.to(device), data.pos.to(device),
                                                     input_lengths=None,
                                                     teaching_force_ratio=config['decoder']['teaching_force_ratio'])
@@ -127,7 +128,7 @@ for epoch in range(config['learning']['epochs']):
     dev_loss = 0
     with torch.no_grad():
         dev_loss = 0
-        for val_data in valid_iter:
+        for val_data in tqdm(valid_iter):
             decoder_outputs, tagger_loss, others = model(val_data.word[0].to(device),
                                                          val_data.lex.to(device),
                                                          val_data.pos.to(device),
